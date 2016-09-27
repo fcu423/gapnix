@@ -12,6 +12,32 @@
 
 ActiveRecord::Schema.define(version: 20160928003536) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",        null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "name",        null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string   "name",        null: false
+    t.string   "description"
+    t.integer  "project_id",  null: false
+    t.integer  "category_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "tokens", force: :cascade do |t|
     t.string   "access_token"
     t.string   "refresh_token"
@@ -36,5 +62,4 @@ ActiveRecord::Schema.define(version: 20160928003536) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
-
 end
