@@ -7,7 +7,7 @@
 default: &default
   adapter: postgresql
   user: postgres
-  password: "victorengap" 
+  password: "abc12345" 
   pool: 5
   timeout: 5000
   host: localhost

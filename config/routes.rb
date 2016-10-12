@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback" => 'sessions#create'
   get 'tasks/index'
   get 'tasks/create'
-  
+
+  root to: "pages#index"
+
+  resources :users do
+    resources :categories, controller: "users/categories"
+    resources :projects, controller: "users/projects"
+  end
   
 end
