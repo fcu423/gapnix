@@ -1,3 +1,7 @@
 en:
   save_entity: "Save"
   home_title: "Home"
+  new: "New"
+  edit: "Edit"
+  delete_message: "Are you sure you want to delete this item?"
+  email_not_authorized: "Sorry, we just accept GrowthAccelerationPartner members, please try again with a GAP email"

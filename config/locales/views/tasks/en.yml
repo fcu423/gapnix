@@ -5,3 +5,7 @@ en:
     manual_time_placeholder: "Manual time"
     submit_auto: "Save and start counting..."
     submit_manual: "Save task"
+    title: "Tasks"
+    created: "Task created!"
+    deleted: "Task deleted!"
+    updated: "Task updated!"

@@ -3,11 +3,9 @@ Rails.application.routes.draw do
   root to: 'sessions#new'
   resources :sessions, only: :index
   resource :dashboard, only: :show
-  resources :tasks, only: [:index, :create]
+  resources :tasks
   get "/auth/:provider/callback" => 'sessions#create'
   resource :dashboard, only: :show
-  resources :tasks, only: [:index,:create]
-
   resources :users do
     resources :projects, controller: "users/projects" do
       resources :categories, controller: "users/categories"

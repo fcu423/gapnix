@@ -1,0 +1,4 @@
+= render "shared/breadcrumb" 
+= render "tasks/form_edit", task: @task, projects: @projects, categories: @categories, url: task_path, method: :put
+
+= javascript_include_tag 'tasks/edit.js'

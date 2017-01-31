@@ -18,6 +18,35 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
+  def edit
+    @task = current_user.tasks.find(params[:id])
+    @categories = current_user.categories
+    @projects = current_user.projects
+    add_breadcrumb I18n.t("edit"), :edit_task_path
+  end
+
+  def update
+    @taks = current_user.tasks.find(params[:id])
+    @taks.attributes = task_params      
+    if @taks.valid?
+      @taks.save
+      flash[:notice] = I18n.t("tasks.updated")
+      redirect_to tasks_path
+    else
+      flash[:alert] = @taks.errors.full_messages.to_sentence
+      render :edit
+    end
+  end
+
+  def destroy
+    if current_user.tasks.find(params[:id]).destroy
+      flash[:notice] = I18n.t("tasks.deleted")
+      redirect_to tasks_path            
+    else
+      flash[:alert] = task.errors.full_messages.to_sentence      
+    end
+  end
+
   private 
   def task_params
     params.require(:task).permit(:description, :billable, :hours, :category_id, :project_id)

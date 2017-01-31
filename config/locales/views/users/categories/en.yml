@@ -2,4 +2,8 @@ en:
   categories:
     create_new_button: "Create new category"
     title: "Categories"
-    new: "New"
+    created: "Category created!"
+    updated: "Category updated!"
+    deleted: "Category deleted!"
+    delete_message_validation: "Deleting this category, will delete all its asociated tasks, are you sure?"
+    no_categories_validation: "you have not created any categories for this project yet"

@@ -10,7 +10,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       session["devise.google_data"] = request.env["omniauth.auth"].except("extra")
       redirect_to root_path
-      flash[:error] = I18n.t("auth.email_not_authorized")
+      flash[:error] = I18n.t("email_not_authorized")
     end
   end
 end

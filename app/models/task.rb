@@ -1,4 +1,6 @@
 class Task < ApplicationRecord
+  acts_as_paranoid
+  attr_accessor :text_hours
   # Constants
   BILLABLE_TIME = 42
   BILLABLE_VACATIONS_TIME = 42
