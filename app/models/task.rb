@@ -44,4 +44,12 @@ class Task < ApplicationRecord
   def created_at_date
     self.created_at.strftime("%d-%m-%Y")
   end
+
+  def task_exist(date, task_name, category_id)
+    Task.joins(:task_times).where("task_times.start_date >= ? AND task_times.start_date <= ? AND description == ? AND category_id == ?", date.beginning_of_day, date.end_of_day, task_name, category_id)
+  end
+
+  def test
+   "not working"
+  end
 end

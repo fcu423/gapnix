@@ -28,6 +28,4 @@ Gapnix.views.tasksIndex = (function () {
 
 })();
 
-(function () {
-  Gapnix.views.tasksIndex.init();
-})();
+Gapnix.views.tasksIndex.init();
