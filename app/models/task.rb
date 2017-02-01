@@ -10,6 +10,7 @@ class Task < ApplicationRecord
   belongs_to :project
   belongs_to :user
   has_many :task_times, dependent: :destroy
+  accepts_nested_attributes_for :task_times
 
   # Validations
   validates :description, presence: true
@@ -47,9 +48,5 @@ class Task < ApplicationRecord
 
   def task_exist(date, task_name, category_id)
     Task.joins(:task_times).where("task_times.start_date >= ? AND task_times.start_date <= ? AND description == ? AND category_id == ?", date.beginning_of_day, date.end_of_day, task_name, category_id)
-  end
-
-  def test
-   "not working"
   end
 end

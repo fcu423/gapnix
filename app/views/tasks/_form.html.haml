@@ -2,7 +2,7 @@
   .box-header.with-border
     %h1.box-title
       Tasks
-    = form_for 'task', url: tasks_path, method: :post, html: {class: "form-horizontal center"} do |form|
+    = form_for @task, url: tasks_path, method: :post, html: {class: "form-horizontal center"} do |form|
       .form-group
         .col-md-3.col-md-offset-1
           = form.label :category_id, "Category" 
@@ -23,6 +23,7 @@
           link_auto: I18n.t("tasks.auto_time_link"), submit_auto: I18n.t("tasks.submit_auto"), submit_manual: I18n.t("tasks.submit_manual")})
         .col-md-5
           = form.text_field :text_hours, class: "hidden js-hours-field", placeholder: I18n.t("tasks.manual_time_placeholder")
-          = form.text_field :hours, class: "hidden js-hours-hidden-field"
+          = form.fields_for :task_times do |task_time|            
+            = task_time.text_field :hours, class: "hidden js-hours-hidden-field"
         .col-md-3
           = form.submit I18n.t("tasks.submit_auto"), class: "btn btn-success btn-lg pull-right btn-block", id: "submit-task"

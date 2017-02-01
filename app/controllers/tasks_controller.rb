@@ -5,10 +5,13 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.weekly_current_task(current_user).paginate(page: params[:page])
     @categories = current_user.categories
-    @projects = current_user.projects     
+    @projects = current_user.projects
+    @task = current_user.tasks.new
+    @task_time = @task.task_times.new
   end
 
-  def create
+  def create    
+    init_time_tasks_params
     @task = current_user.tasks.new(task_params)
     if @task.save
       flash[:notice] = I18n.t("tasks.created")
@@ -49,6 +52,11 @@ class TasksController < ApplicationController
 
   private 
   def task_params
-    params.require(:task).permit(:description, :billable, :hours, :category_id, :project_id)
+    params.require(:task).permit(:description, :billable, :category_id, :project_id, task_times_attributes: [:hours, :start_date])
+  end
+
+  def init_time_tasks_params
+    task_params[:task_times_attributes]['0'][:start_date] = DateTime.current    
   end
 end
+
