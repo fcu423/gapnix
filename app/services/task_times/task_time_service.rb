@@ -1,6 +1,6 @@
 class TaskTimes::TaskTimeService
-  attr_reader :user, :params
-  
+  attr_accessor :params
+
   def initialize (user, params)
     @user = user
     @params = params
@@ -19,7 +19,7 @@ class TaskTimes::TaskTimeService
           #implement error creating task
         end
       end
-    elsif
+    else
       # Fix
       if resume_task #pass the id of the task tha is returned by the function that marlon did
         #implement error creating time
@@ -27,8 +27,9 @@ class TaskTimes::TaskTimeService
     end
   end
 
-  def resume_task
+  def resume_task    
     ActiveRecord::Base.transaction do
+      binding.pry
       deactivate_all_task_times
       #return unless update_task_time(get_task_time_with_date)
       if update_task_time(get_task_time_with_date)
@@ -40,9 +41,10 @@ class TaskTimes::TaskTimeService
 
   def stop_task
     ActiveRecord::Base.transaction do
+      binding.pry
       task_time = get_active_task_time
-      if task_time.start_date.to_date == params["end_time"].to_date # A task is being stopped in the same day
-        end_task_time(task_time, params["end_time"])
+      if task_time.start_date.to_date == params[:end_time].to_date # A task is being stopped in the same day
+        end_task_time(task_time, params[:end_time])
       elsif # The task was stopped in a future day from where it was started
         end_task_time(task_time, task_time.start_date.end_of_day) # Finish the existing task time EOD
         days_between_dates = ((task_time.end_time - task_time.start_date) / 86400).ceil
@@ -52,7 +54,7 @@ class TaskTimes::TaskTimeService
           create_task # Creating new task for the next day
           if i == days_between_dates # In the last iteration it must set the end_time to the time when the task was stopped by the user
             params.end_time = finish_time
-          elsif
+          else
             params.end_time = params.start_time.end_of_day
           end
           stop_task
@@ -63,16 +65,18 @@ class TaskTimes::TaskTimeService
 
   private
 
+  attr_reader :user
+
   def end_task_time(task_time, end_time)
     task_time.end_time = end_time 
     task_time.is_active = false
-    task_time.hours = ((task_time.end_time - task_time.start_date) / 3600).round
+    task_time.hours = ((task_time.end_time - task_time.start_date) / 3600).round(2)
     task_time.save
   end
 
   def deactivate_all_task_times
     if params[:task_id].present?
-      TaskTime.where("task_id = ?", params["task_id"]).update_all(is_active: false)
+      TaskTime.where("task_id = ?", params[:task_id]).update_all(is_active: false)
     end
   end
 
@@ -84,12 +88,12 @@ class TaskTimes::TaskTimeService
   end
 
   def create_task_time
-    TaskTime.new(task_id: params["task_id"], start_date: params["start_date"], is_active: true).save
+    TaskTime.new(task_id: params[:task_id], start_date: params[:start_date], is_active: true).save
   end
 
   def get_active_task_time
     if params[:task_id].present?
-      TaskTime.where("task_id = ? AND is_active = 1", params[:task_id]).first
+      TaskTime.where("task_id = ? AND is_active = true", params[:task_id]).first
     end
   end
 
