@@ -56,7 +56,9 @@ class TasksController < ApplicationController
   end
 
   def init_time_tasks_params
-    task_params[:task_times_attributes]['0'][:start_date] = DateTime.current    
+    p = params[:task][:task_times_attributes]['0']
+    p[:start_date] = DateTime.current
+    p[:is_active] = true
   end
 end
 

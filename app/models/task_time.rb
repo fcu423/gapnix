@@ -1,6 +1,6 @@
 class TaskTime < ApplicationRecord
   # Relationships
-  belongs_to :task, required: true
+  belongs_to :task
 
   # Validations
   validates :start_date, presence: true

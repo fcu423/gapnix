@@ -22,7 +22,7 @@
           = link_to(I18n.t("tasks.manual_time_link"), 'javascript:;', class: "js-link-hours", data: {link_manual: I18n.t("tasks.manual_time_link"), 
           link_auto: I18n.t("tasks.auto_time_link"), submit_auto: I18n.t("tasks.submit_auto"), submit_manual: I18n.t("tasks.submit_manual")})
         .col-md-5
-          = form.text_field :text_hours, class: "hidden js-hours-field", placeholder: I18n.t("tasks.manual_time_placeholder")
+          = text_field_tag :text_hours, nil, class: "hidden js-hours-field", placeholder: I18n.t("tasks.manual_time_placeholder")
           = form.fields_for :task_times do |task_time|            
             = task_time.text_field :hours, class: "hidden js-hours-hidden-field"
         .col-md-3

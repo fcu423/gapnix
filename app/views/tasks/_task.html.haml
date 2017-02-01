@@ -1,12 +1,13 @@
-%tr
-  %td{title: task.created_at_date}= task.created_at_day_name
-  %td= task.project.name
-  %td= task.category.name
-  %td= task.description
-  %td.js-hour-cell
-    -# = task.first().task_times.first().hours
-  %td
-    = link_to "", edit_task_path(id: task), class: 'btn btn-default fa fa-edit'
-    &nbsp;
-    = link_to "", task_path(id: task), class: 'btn btn-default fa fa-trash', method: 'delete', data: {confirm: I18n.t('delete_message')}
-    &nbsp;
+.form-group
+  %div.bgWhite.col-md-8.col-md-offset-2.infoBox
+    %div.info-box-icon.col-md-2
+    %div.col-md-6
+      %h4= "#{task.project.name}: #{task.category.name}"
+      %h2= task.description    
+    %div.col-md-2
+      %h4= task.created_at_day_name    
+      %h2.js-hour-cell
+        = task.task_times
+    %div.col-md-2
+      -# = link_to "",  edit_task_path(id: task), class: 'btn btnInfoBox pull-left fa fa-edit', style: 'color:grey'
+      -# = link_to "", task_path(id: task), class: 'btn btnInfoBox pull-right fa fa-trash', style: 'color:grey', method: 'delete'

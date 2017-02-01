@@ -1,0 +1,19 @@
+.btnInfoBox
+{
+    background-color: #e0e0eb;
+    border-color: #52527a;
+    margin-top: 10px;
+}
+
+.bgWhite
+{
+    background-color: #ffffff !important;
+}
+
+.infoBox
+{
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    border-radius: 2px;
+    margin-bottom: 15px;
+    color: #000000;
+}

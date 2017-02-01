@@ -1,21 +1,10 @@
+%link{:href => "tasksList.css", :rel => "stylesheet", :type => "text/css"}/
 .content
+  .row.col-md-offset-2
+    %h3
+      = "List of Tasks #{get_begin_end_week_format}"
   .row
-    .box
-      .box-header
-        %h3.box-title
-          = "List of Tasks #{get_begin_end_week_format}"
-          .box-tools
-      .box-body.table-responsive.no-padding
-        %table.table.table-hover
-          %tbody
-            %tr
-              %th Created
-              %th Project
-              %th Category
-              %th Description
-              %th Hours
-              %th Actions
-            = render partial: "task", collection: tasks
-      .box-footer.clearfix
-        = render "shared/pagination", list: tasks
+    = render partial: "task", collection: @tasks
+  .row.col-md-offset-5
+    = render "shared/pagination", list: @tasks
 
