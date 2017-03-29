@@ -4,6 +4,9 @@ class Task < ApplicationRecord
   BILLABLE_TIME = 42
   BILLABLE_VACATIONS_TIME = 42
 
+  #attributes
+  attr_accessor :start_date, :end_time
+  
   # Relationships
   belongs_to :category
   belongs_to :project
@@ -19,6 +22,15 @@ class Task < ApplicationRecord
   #scope :current_user, ->(user) {  where(user_id: user.id) }
   scope :current_weekly, ->(user_id) {  where("created_at >= ? AND created_at <= ? AND user_id = ?", Date.current.at_beginning_of_week, Date.current.at_end_of_week, user_id) }
   scope :weekly_current_task, ->(user) { current_weekly(user.id) }
+  scope :task_exist, ->(date, task_name, category_id) {
+    joins(:task_times)
+    .where(
+      "task_times.start_date >= ? AND task_times.start_date <= ? AND description = ? AND category_id = ?", 
+      date.beginning_of_day, 
+      date.end_of_day, 
+      task_name, category_id
+    ).first
+  }
 
   # Class methods
   def self.billable_hours(user, billable = true)
@@ -43,9 +55,5 @@ class Task < ApplicationRecord
 
   def created_at_date
     self.created_at.strftime("%d-%m-%Y")
-  end
-
-  def task_exist(date, task_name, category_id)
-    Task.joins(:task_times).where("task_times.start_date >= ? AND task_times.start_date <= ? AND description == ? AND category_id == ?", date.beginning_of_day, date.end_of_day, task_name, category_id)
   end
 end

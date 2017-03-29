@@ -1,6 +1,14 @@
-.form-group
+.row
   %div.bgWhite.col-md-8.col-md-offset-2.infoBox
-    %div.info-box-icon.col-md-2
+    = form_for task, url: task_path(task), method: method, html: {class: "form-horizontal center", role: "form"} do |form|
+      = form.hidden_field :id, value: task.id
+      = form.hidden_field :start_date, class: "js-start-date"
+      = form.hidden_field :end_time, class: "js-end-date"
+      - unless task.stored_manually
+        %div.col-md-1.control_buttons
+          = form.button "", class: 'btn btn-default fa fa-play-circle', name: 'resume', value: 1 
+        %div.col-md-1.control_buttons
+          = form.button "", class: 'btn btn-default fa fa-stop stop', name: 'stop', value: 1
     %div.col-md-6
       %h4= "#{task.project.name}: #{task.category.name}"
       %h2= task.description    

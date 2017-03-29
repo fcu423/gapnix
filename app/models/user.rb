@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :projects
   has_many :categories, through: :projects
   has_many :tasks, dependent: :destroy
+  has_many :task_times, through: :tasks
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

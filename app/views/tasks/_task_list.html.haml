@@ -4,7 +4,7 @@
     %h3
       = "List of Tasks #{get_begin_end_week_format}"
   .row
-    = render partial: "task", collection: @tasks
+    = render partial: "task", collection: @tasks, locals: {method: :put}
   .row.col-md-offset-5
     = render "shared/pagination", list: @tasks
 

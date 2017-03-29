@@ -1,15 +1,19 @@
 .box.box-primary
   .box-header.with-border
+    - if @task_active
+      %h1.box-title
+        Active task
+        = render partial: "task", collection: @tasks, locals: {method: :put}
     %h1.box-title
       Tasks
     = form_for @task, url: tasks_path, method: :post, html: {class: "form-horizontal center"} do |form|
       .form-group
         .col-md-3.col-md-offset-1
-          = form.label :category_id, "Category" 
-          = form.select(:category_id, options_for_select(categories.all.map{ |e| [e.name, e.id] }), {}, {class: "form-control"})
-        .col-md-3
           = form.label :project_id, "Project" 
           = form.select(:project_id, options_for_select(projects.all.map{ |e| [e.name, e.id] }), {}, {class: "form-control"})
+        .col-md-3
+          = form.label :category_id, "Category" 
+          = form.select(:category_id, options_for_select(categories.all.map{ |e| [e.name, e.id] }), {}, {class: "form-control"})
         .col-md-3
           = form.label :billable, "Is billable" 
           = form.select(:billable, options_for_select([["billable", "1"], ["unbillable", "0"]]), {}, {class: "form-control"})
@@ -25,5 +29,6 @@
           = text_field_tag :text_hours, nil, class: "hidden js-hours-field", placeholder: I18n.t("tasks.manual_time_placeholder")
           = form.fields_for :task_times do |task_time|            
             = task_time.text_field :hours, class: "hidden js-hours-hidden-field"
+            = task_time.hidden_field :start_date, class: "js-start-date"
         .col-md-3
-          = form.submit I18n.t("tasks.submit_auto"), class: "btn btn-success btn-lg pull-right btn-block", id: "submit-task"
+          = form.button I18n.t("tasks.submit_auto"), class: 'btn btn-success btn-lg pull-right btn-block', name: 'create_task', id: "submit-task", value: 'auto'

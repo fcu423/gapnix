@@ -1,6 +1,6 @@
 Gapnix.views.tasksIndex = (function () {
 
-  function change_time_type() {
+  function changeTimeType() {
     var link_to = $(".js-link-hours");
 
     link_to.on("click", function () {
@@ -13,16 +13,18 @@ Gapnix.views.tasksIndex = (function () {
 
       if (link_to.text() == manualTimeStr) {
         link_to.text(autoTimeStr);
-        submitInput.val(link_to.data("submit-manual"));
+        submitInput.html(link_to.data("submit-manual"));
+        submitInput.val('manual');
       }
       else {
         link_to.text(manualTimeStr);
-        submitInput.val(link_to.data("submit-auto"));
+        submitInput.html(link_to.data("submit-auto"));
+        submitInput.val('auto');
       }
     });
   }
 
-  function on_changed_time() {
+  function onChangedTime() {
     var time_field = $(".js-hours-field");
     var hidden_time_field = $(".js-hours-hidden-field");
 
@@ -32,9 +34,31 @@ Gapnix.views.tasksIndex = (function () {
     });
   }
 
+  function setTaskResumeDates() {
+    var dateInputs = $(".js-start-date");
+    $.each(dateInputs, function(index, element){
+      element.value = Date.now()
+    });
+  }
+
+  function setStopEvents() {
+    $(".stop").on('click', function(){
+      $(".js-end-date").val(Date.now())
+    })
+  }
+
+  function setTaskFormEvents(){
+    $('#submit-task').on('click', function(){
+      $(".js-start-date").val(Date.now());
+    });
+  }
+
   function init() {
-    change_time_type();
-    on_changed_time();
+    changeTimeType();
+    onChangedTime();
+    setTaskResumeDates();
+    setStopEvents();
+    setTaskFormEvents();
   }
 
   return {
